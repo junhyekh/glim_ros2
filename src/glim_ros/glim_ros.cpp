@@ -19,6 +19,8 @@
 #include <sensor_msgs/msg/imu.hpp>
 #include <sensor_msgs/msg/image.hpp>
 #include <sensor_msgs/msg/point_cloud2.hpp>
+#include <livox_ros_driver2/msg/custom_msg.hpp>
+
 
 #include <gtsam_points/optimizers/linearization_hook.hpp>
 #include <gtsam_points/cuda/nonlinear_factor_set_gpu_create.hpp>
@@ -281,6 +283,11 @@ size_t GlimROS::points_callback(const sensor_msgs::msg::PointCloud2::ConstShared
   spdlog::debug("workload={}", workload);
 
   return workload;
+}
+
+size_t GlimROS::livox_points_callback(const livox_ros_driver2::msg::CustomMsg::ConstSharedPtr msg) {
+  spdlog::trace("livox points: {}.{}", msg->header.stamp.sec, msg->header.stamp.nanosec);
+  return 0;
 }
 
 bool GlimROS::needs_wait() {
